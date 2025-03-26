@@ -30,6 +30,8 @@ let bottomPipeImg;
 
 //physics
 let velocityX = -2; //pipe speed
+let velocityY = 0; //bird jump speed
+let gravity = .4;
 
 window.onload = function() {
     //context
@@ -53,6 +55,7 @@ window.onload = function() {
 
     requestAnimationFrame(update);
     setInterval(placePipes, 1500); //1500ms = 1.5s
+    document.addEventListener("keydown", moveBird);
 }
 
 function update() {
@@ -60,6 +63,8 @@ function update() {
     context.clearRect(0, 0, board.width, board.height);
 
     //bird
+    velocityY += gravity;
+    bird.y = Math.max(bird.y+velocityY, 0); //upper height limit
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     //pipes
@@ -95,5 +100,11 @@ function placePipes(){
     }
 
     pipeArray.push(bottomPipe);
+}
 
+function moveBird (e) {
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
+        //jump
+        velocityY = -6;
+    }
 }
