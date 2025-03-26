@@ -72,20 +72,14 @@ window.onload = function() {
     document.addEventListener("keydown", moveBird);
 
     document.addEventListener("mousedown", function(e) {
-        if (!touchHandled) {
+        if (prevTime != e.timeStamp) {
             moveBird(e);
         }
     });
 
-    document.addEventListener("touchstart", function (e) {
-        if (!touchHandled) {
-            touchHandled = true;
-            e.preventDefault(); // Prevent the default behavior
-            moveBird(e);
-            setTimeout(() => {
-                touchHandled = false;
-            }, 100); // Reset the flag after a short delay
-        }
+    document.addEventListener("touchstart", moveBird);
+    document.addEventListener("touchend", function(e){
+        prevTime = e.timeStamp;
     });
 }
 
@@ -182,11 +176,8 @@ function updateBirdFrameID(){
 function moveBird (e) {
     console.log(e);
     if (e.type == "mousedown" || e.type == "touchstart" || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
-        if (e.timeStamp != prevTime){
-            //jump
-            velocityY = -6;
-            prevTime = e.timeStamp;
-        }
+        velocityY = -6;
+        prevTime = e.timeStamp;
     }
 
     //reset game
