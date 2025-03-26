@@ -174,8 +174,10 @@ function updateBirdFrameID(){
 }
 
 function moveBird (e) {
-    console.log(e.type);
-    console.log(e.timeStamp);
+    let t = String(e.type);
+    let ts = String(e.timeStamp);
+    console.log(t);
+    console.log(ts);
     if (e.type == "mousedown" || e.type == "touchstart" || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
         velocityY = -6;
         prevTime = e.timeStamp;
