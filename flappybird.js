@@ -35,11 +35,14 @@ let velocityX = -2; //pipe speed
 let velocityY = 0; //bird jump speed
 let gravity = .4;
 
+//stats
 let gameOver = false;
 let score = 0;
 let highScore = 0;
 
+//jump mechanics
 let prevTime = -1;
+let touchEvent = false; //flag to prevent double jump on mobile
 
 window.onload = function() {
     //context
@@ -67,11 +70,21 @@ window.onload = function() {
     setInterval(updateBirdFrameID, 500);
 
     document.addEventListener("keydown", moveBird);
-    document.addEventListener("mousedown", moveBird);
+
+    document.addEventListener("mousedown", function(e) {
+        if (!touchEvent) {
+            moveBird(e);
+        }
+    });
 
     document.addEventListener("touchstart", function (e) {
-        e.preventDefault(); // Prevent double jump
+        touchEvent = true;
+        e.preventDefault(); // Prevent the default behavior
         moveBird(e);
+    });
+
+    document.addEventListener("touchend", function () {
+        touchEvent = false;
     });
 }
 
