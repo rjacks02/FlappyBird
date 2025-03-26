@@ -159,6 +159,7 @@ function updateBirdFrameID(){
 }
 
 function moveBird (e) {
+    e.preventDefault();
     if (e.type == "mousedown" || e.type == "touchstart" || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
         //jump
         velocityY = -6;
