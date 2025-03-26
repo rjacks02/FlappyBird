@@ -141,6 +141,14 @@ function moveBird (e) {
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
         //jump
         velocityY = -6;
+
+        //reset game
+        if (gameOver){
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
     }
 }
 
