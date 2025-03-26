@@ -69,8 +69,10 @@ window.onload = function() {
     document.addEventListener("keydown", moveBird);
     document.addEventListener("mousedown", moveBird);
 
-    document.removeEventListener("touchstart", moveBird);
-    document.addEventListener("touchstart", moveBird);
+    document.addEventListener("touchstart", function (e) {
+        e.preventDefault(); // Prevent double jump
+        moveBird(e);
+    });
 }
 
 function update() {
