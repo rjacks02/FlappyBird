@@ -42,7 +42,7 @@ let highScore = 0;
 
 //jump mechanics
 let prevTime = -1;
-let touchEvent = false; //flag to prevent double jump on mobile
+let touchHandled = false; //flag to prevent double jump on mobile
 
 window.onload = function() {
     //context
@@ -72,19 +72,20 @@ window.onload = function() {
     document.addEventListener("keydown", moveBird);
 
     document.addEventListener("mousedown", function(e) {
-        if (!touchEvent) {
+        if (!touchHandled) {
             moveBird(e);
         }
     });
 
     document.addEventListener("touchstart", function (e) {
-        touchEvent = true;
-        e.preventDefault(); // Prevent the default behavior
-        moveBird(e);
-    });
-
-    document.addEventListener("touchend", function () {
-        touchEvent = false;
+        if (!touchHandled) {
+            touchHandled = true;
+            e.preventDefault(); // Prevent the default behavior
+            moveBird(e);
+            setTimeout(() => {
+                touchHandled = false;
+            }, 100); // Reset the flag after a short delay
+        }
     });
 }
 
