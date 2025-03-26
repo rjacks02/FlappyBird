@@ -64,6 +64,7 @@ window.onload = function() {
     setInterval(placePipes, 1500); //1500ms = 1.5s
     setInterval(updateBirdFrameID, 500);
     document.addEventListener("keydown", moveBird);
+    document.addEventListener("mousedown", moveBird);
 }
 
 function update() {
@@ -157,7 +158,7 @@ function updateBirdFrameID(){
 }
 
 function moveBird (e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
+    if (e.clientX || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
         //jump
         velocityY = -6;
 
