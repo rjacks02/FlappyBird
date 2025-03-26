@@ -80,6 +80,10 @@ window.onload = function() {
     document.addEventListener("touchstart", moveBird);
     document.addEventListener("touchend", function(e){
         prevTime = e.timeStamp;
+        let t = String(e.type);
+        let ts = String(e.timeStamp);
+        console.log("Type: " + t);
+        console.log("Time: " + ts);
     });
 }
 
@@ -176,8 +180,8 @@ function updateBirdFrameID(){
 function moveBird (e) {
     let t = String(e.type);
     let ts = String(e.timeStamp);
-    console.log(t);
-    console.log(ts);
+    console.log("Type: " + t);
+    console.log("Time: " + ts);
     if (e.type == "mousedown" || e.type == "touchstart" || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
         velocityY = -6;
         prevTime = e.timeStamp;
