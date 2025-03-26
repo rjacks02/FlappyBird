@@ -39,6 +39,8 @@ let gameOver = false;
 let score = 0;
 let highScore = 0;
 
+let prevTime = -1;
+
 window.onload = function() {
     //context
     board = document.getElementById("board");
@@ -162,17 +164,21 @@ function updateBirdFrameID(){
 }
 
 function moveBird (e) {
+    console.log(e);
     if (e.type == "mousedown" || e.type == "touchstart" || e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX"){
-        //jump
-        velocityY = -6;
-
-        //reset game
-        if (gameOver){
-            bird.y = birdY;
-            pipeArray = [];
-            score = 0;
-            gameOver = false;
+        if (e.timeStamp != prevTime){
+            //jump
+            velocityY = -6;
+            prevTime = e.timeStamp;
         }
+    }
+
+    //reset game
+    if (gameOver){
+        bird.y = birdY;
+        pipeArray = [];
+        score = 0;
+        gameOver = false;
     }
 }
 
