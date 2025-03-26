@@ -37,6 +37,7 @@ let gravity = .4;
 
 let gameOver = false;
 let score = 0;
+let highScore = 0;
 
 window.onload = function() {
     //context
@@ -47,6 +48,7 @@ window.onload = function() {
     
     //bird
     birdImg = new Image();
+    birdImg.src = "./assets/flappybird.png"
     birdImg.src = birdFrames[birdFrameID];
     birdImg.onload = function() {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
@@ -67,6 +69,9 @@ window.onload = function() {
 function update() {
     requestAnimationFrame(update);
     if (gameOver){
+        context.textAlign = 'center';
+        context.fillText("GAME OVER", boardWidth/2, boardHeight/2);
+        context.textAlign = 'left';
         return;
     }
     context.clearRect(0, 0, board.width, board.height);
@@ -90,6 +95,9 @@ function update() {
         if (!pipe.passed && bird.x > pipe.x + pipe.width){
             score += .5;
             pipe.passed = true;
+            if (score > highScore){
+                highScore = score;
+            }
         }
         if (detectCollision(bird, pipe)){
             gameOver = true;
@@ -104,10 +112,13 @@ function update() {
     //score
     context.fillStyle = "white";
     context.font = "45px sans-serif";
-    context.fillText(score, 5, 45);
+    context.fillText("High Score: " + highScore, 5, 45);
+    context.fillText("Score: " + score, 5, 95);
 
     if (gameOver){
-        context.fillText("GAME OVER", 5, 90);
+        context.textAlign = 'center';
+        context.fillText("GAME OVER", boardWidth/2, boardHeight/2);
+        context.textAlign = 'left';
     }
 }
 
@@ -143,7 +154,6 @@ function placePipes(){
 
 function updateBirdFrameID(){
     birdFrameID = (birdFrameID + 1) % 4;
-    console.log(birdFrameID);
 }
 
 function moveBird (e) {
