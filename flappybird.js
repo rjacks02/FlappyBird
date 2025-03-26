@@ -10,6 +10,8 @@ let birdHeight = 24;
 let birdX = boardWidth/8;
 let birdY = boardHeight/2;
 let birdImg;
+let birdFrameID = 0;
+let birdFrames = ["./assets/flappybird0.png", "./assets/flappybird1.png", "./assets/flappybird2.png", "./assets/flappybird3.png"]
 
 let bird = {
     x : birdX,
@@ -45,19 +47,20 @@ window.onload = function() {
     
     //bird
     birdImg = new Image();
-    birdImg.src = "./flappybird.png";
+    birdImg.src = birdFrames[birdFrameID];
     birdImg.onload = function() {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
 
     //pipes
     topPipeImg = new Image();
-    topPipeImg.src = "./toppipe.png";
+    topPipeImg.src = "./assets/toppipe.png";
     bottomPipeImg = new Image();
-    bottomPipeImg.src = "./bottompipe.png";
+    bottomPipeImg.src = "./assets/bottompipe.png";
 
     requestAnimationFrame(update);
     setInterval(placePipes, 1500); //1500ms = 1.5s
+    setInterval(updateBirdFrameID, 500);
     document.addEventListener("keydown", moveBird);
 }
 
@@ -71,6 +74,7 @@ function update() {
     //bird
     velocityY += gravity;
     bird.y = Math.max(bird.y+velocityY, 0); //upper height limit
+    birdImg.src = birdFrames[birdFrameID];
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     if (bird.y > board.height){
@@ -135,6 +139,11 @@ function placePipes(){
     }
 
     pipeArray.push(bottomPipe);
+}
+
+function updateBirdFrameID(){
+    birdFrameID = (birdFrameID + 1) % 4;
+    console.log(birdFrameID);
 }
 
 function moveBird (e) {
