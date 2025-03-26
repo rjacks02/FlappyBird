@@ -18,6 +18,19 @@ let bird = {
     height : birdHeight
 }
 
+//pipes
+let pipeArray = [];
+let pipeWidth = 64;
+let pipeHeight = 512;
+let pipeX = boardWidth;
+let pipeY = 0;
+
+let topPipeImg;
+let bottomPipeImg;
+
+//physics
+let velocityX = -2; //pipe speed
+
 window.onload = function() {
     //context
     board = document.getElementById("board");
@@ -31,5 +44,42 @@ window.onload = function() {
     birdImg.onload = function() {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
-    
+
+    //pipes
+    topPipeImg = new Image();
+    topPipeImg.src = "./toppipe.png";
+    bottomPipeImg = new Image();
+    bottomPipeImg.src = "./bottompipe.png";
+
+    requestAnimationFrame(update);
+    setInterval(placePipes, 1500); //1500ms = 1.5s
+}
+
+function update() {
+    requestAnimationFrame(update);
+    context.clearRect(0, 0, board.width, board.height);
+
+    //bird
+    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+
+    //pipes
+    for (let i = 0; i < pipeArray.length; i++){
+        let pipe = pipeArray[i];
+        pipe.x += velocityX;
+        context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+    }
+}
+
+function placePipes(){
+    let topPipe = {
+        img : topPipeImg,
+        x : pipeX,
+        y : pipeY,
+        width : pipeWidth,
+        height : pipeHeight,
+        passed : false
+    }
+
+    pipeArray.push(topPipe);
+
 }
